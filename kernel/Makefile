@@ -4,7 +4,8 @@ PATCHLEVEL = 4
 SUBLEVEL = 65
 EXTRAVERSION =
 NAME = Kleptomaniac Octopus
-
+ARCH        ?= arm
+CROSS_COMPILE    ?= arm-linux-gnueabihf-
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
