@@ -78,6 +78,7 @@
 			label = "green_led";
 			gpios = <&r_pio 0 10 GPIO_ACTIVE_HIGH>;
 			default-state = "on";
+			linux,default-trigger = "heartbeat";
 		};
 
 		status_led {
@@ -258,4 +259,25 @@
 
 &i2c2_pins {
 	bias-pull-up;
+};
+
+&spi1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins>;
+	cs-gpios = <&pio 0 13 GPIO_ACTIVE_LOW>; /* PA13 */
+	#address-cells = <1>;
+	#size-cells = <0>;
+	spilcd@0 {
+		compatible = "sitronix,st7789v";
+		reg = <0>;
+		spi-max-frequency = <32000000>;
+		rotation = <2>;
+		fps = <600>;
+		buswidth = <8>;
+		reset-gpios = <&pio 0 0 GPIO_ACTIVE_HIGH>; /* PA0 */
+		dc-gpios = <&pio 0 1 GPIO_ACTIVE_HIGH>; /* PA1 */
+		led-gpios = <&pio 0 6 GPIO_ACTIVE_HIGH>; /* PA6 */
+		pinctrl-names = "default";
+	};
 };
