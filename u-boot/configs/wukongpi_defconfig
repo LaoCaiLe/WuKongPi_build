@@ -19,3 +19,5 @@ CONFIG_USE_BOOTCOMMAND=y
 CONFIG_BOOTARGS="console=ttyS0,115200 panic=5 rootwait root=/dev/mmcblk0p2 earlyprintk rw"
 CONFIG_BOOTCOMMAND="load mmc 0:1 0x42000000 zImage;if ping $serverip; then tftp 0x43000000 sun8i-h3-wukongpi.dtb; else load mmc 0:1 0x43000000 sun8i-h3-wukongpi.dtb; fi; bootz 0x42000000 - 0x43000000"
 CONFIG_CONS_INDEX=2
+CONFIG_AUTOBOOT_STOP_STR="\r"
+CONFIG_AUTOBOOT_PROMPT="Autoboot in %d seconds, press <Enter> to stop\n"
