@@ -1024,6 +1024,7 @@ int misc_init_r(void)
 	env_set("fel_booted", NULL);
 	env_set("fel_scriptaddr", NULL);
 	env_set("mmc_bootdev", NULL);
+	env_set("netretry", "no");
 
 	boot = sunxi_get_boot_device();
 	/* determine if we are running in FEL mode */
