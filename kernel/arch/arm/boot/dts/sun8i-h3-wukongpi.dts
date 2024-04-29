@@ -88,15 +88,30 @@
 			linux,default-trigger = "heartbeat";
 		};
 	};
-
-	r_gpio_keys {
+	
+	gpio-keys {
 		compatible = "gpio-keys";
-
-		sw4 {
-			label = "sw4";
-			linux,code = <KEY_POWER>;
-			gpios = <&r_pio 0 3 GPIO_ACTIVE_LOW>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		autorepeat;
+			key0 {
+			label = "GPIO Key Enter";
+			linux,code = <KEY_ENTER>;
+			gpios = <&pio 0 2 GPIO_ACTIVE_LOW>;
 		};
+	};
+
+	rotary@0 {
+		compatible = "rotary-encoder";
+		reg = <0x0 0x0>;
+		pinctrl-names = "default";
+		rotary-encoder,relative-axis;
+		rotary-encoder,rollover;
+		// rotary-encoder,steps = <24>; //set range
+
+		gpios = <&pio 0 7 GPIO_ACTIVE_LOW>, /* A */
+				<&pio 0 10 GPIO_ACTIVE_LOW>; /* B */
+
 	};
 
 	reg_vdd_cpux: vdd-cpux-regulator {
