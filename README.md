@@ -14,7 +14,7 @@
 - 添加SIQ-02FVS3旋转编码器驱动  [fa9758133](https://github.com/LaoCaiLe/WuKongPi_build/commit/fa9758133)
 - 删除无用的dts文件  [e714c0e2e](https://github.com/LaoCaiLe/WuKongPi_build/commit/e714c0e2e)/[b9caa4ef9](https://github.com/LaoCaiLe/WuKongPi_build/commit/b9caa4ef9)
 - 添加CPU温度查看支持  [3ca667057](https://github.com/LaoCaiLe/WuKongPi_build/commit/3ca667057)
-
+- 支持使用mqueue接口  [9be889141](https://github.com/LaoCaiLe/WuKongPi_build/commit/9be889141)
 
 **编译：**
 ```
@@ -87,9 +87,12 @@ systemctl get-default -> 获取当前启动模式
 
 > overlay路径存放根文件系统更改和添加的文件，添加如下修改
 - 设置串口终端ttyS0自动登录root用户  [12a978833](https://github.com/LaoCaiLe/WuKongPi_build/commit/12a978833)
-- 设置lcd屏幕终端tty1自动登录root用户  [18fc548de](https://github.com/LaoCaiLe/WuKongPi_build/commit/18fc548de)
+- 设置lcd屏幕终端tty自动登录root用户  [18fc548de](https://github.com/LaoCaiLe/WuKongPi_build/commit/18fc548de)
 - 设置xfce桌面自动登录用户  [2f2d45879](https://github.com/LaoCaiLe/WuKongPi_build/commit/2f2d45879)
 - 设置xfce登录配置  [bd1d5c890](https://github.com/LaoCaiLe/WuKongPi_build/commit/bd1d5c890)
+- 起机时自动设置终端大小和类型  [fafd23d5e](https://github.com/LaoCaiLe/WuKongPi_build/commit/fafd23d5e)
+- lightdm服务添加退出xfce时切换为tty1设备  [ebcdbbc1d](https://github.com/LaoCaiLe/WuKongPi_build/commit/ebcdbbc1d)
+- 添加按键检测服务程序  [06cbc3ceb](https://github.com/LaoCaiLe/WuKongPi_build/commit/06cbc3ceb)
 
 ## 4. pic
 ![](./other/pic/xfce_desktop1.jpg)
