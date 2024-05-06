@@ -93,6 +93,7 @@ systemctl get-default -> 获取当前启动模式
 - 起机时自动设置终端大小和类型  [fafd23d5e](https://github.com/LaoCaiLe/WuKongPi_build/commit/fafd23d5e)
 - lightdm服务添加退出xfce时切换为tty1设备  [ebcdbbc1d](https://github.com/LaoCaiLe/WuKongPi_build/commit/ebcdbbc1d)
 - 添加按键检测服务程序  [06cbc3ceb](https://github.com/LaoCaiLe/WuKongPi_build/commit/06cbc3ceb)
+- 添加系统监测程序([github](https://github.com/LaoCaiLe/lv_performance_monitor/tree/on-board))  [0776be62a](https://github.com/LaoCaiLe/WuKongPi_build/commit/0776be62a)
 
 ## 4. pic
 ![](./other/pic/xfce_desktop1.jpg)
