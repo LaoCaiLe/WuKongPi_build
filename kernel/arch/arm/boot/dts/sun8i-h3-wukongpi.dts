@@ -78,8 +78,7 @@
 		pwr_led {
 			label = "green_led";
 			gpios = <&r_pio 0 10 GPIO_ACTIVE_HIGH>;
-			default-state = "on";
-			linux,default-trigger = "heartbeat";
+			default-state = "off";
 		};
 
 		status_led {

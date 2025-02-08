@@ -20,8 +20,12 @@
 #define IS_XFCE_RUNNING_CMD "pgrep xfwm4"
 #define ENTER_XFCE_DESKTOP_CMD "systemctl start lightdm"
 #define EXIT_XFCE_DESKTOP_CMD "systemctl stop lightdm"
-#define GREEN_LED_ON_CMD "echo 1 > /sys/class/leds/green_led/brightness"
+#define GREEN_LED_HEARTBEAT_CMD "echo 1 > /sys/class/leds/green_led/brightness; echo heartbeat > /sys/class/leds/green_led/trigger"
+#define GREEN_LED_DEFAULT_ON_CMD "echo 1 > /sys/class/leds/green_led/brightness; echo default-on  > /sys/class/leds/green_led/trigger"
 #define GREEN_LED_OFF_CMD "echo 0 > /sys/class/leds/green_led/brightness"
+#define RED_LED_HEARTBEAT_CMD "echo 1 > /sys/class/leds/red_led/brightness; echo heartbeat > /sys/class/leds/red_led/trigger"
+#define RED_LED_DEFAULT_ON_CMD "echo 1 > /sys/class/leds/red_led/brightness; echo default-on  > /sys/class/leds/red_led/trigger"
+#define RED_LED_OFF_CMD "echo 0 > /sys/class/leds/red_led/brightness"
 #define TTY_CURSOR_OFF_CMD "setterm -cursor off > /dev/tty1"
 #define TTY_CURSOR_ON_CMD "setterm -cursor on > /dev/tty1"
 
@@ -47,7 +51,7 @@ typedef struct
 
 } key_task_t;
 static key_task_t s_key_task_t = {0};
-
+static bool is_red_led_on = true;
 void* key_thread(void * arg)
 {
     int i = 0;
@@ -120,7 +124,7 @@ static bool get_key_event(void)
     static uint32_t last_press_time = 0;
 
     memset(&event, 0x00, sizeof(event));
-    ret = mq_receive(s_key_task_t.qfd, (struct input_event *)&event, sizeof(struct input_event), 0);
+    ret = mq_receive(s_key_task_t.qfd, (char *)&event, sizeof(struct input_event), 0);
     if(ret == -1)
     {
         syslog(LOG_ERR,"receive the mqueue %d error because %s\n", s_key_task_t.qfd, strerror(errno));
@@ -221,17 +225,27 @@ int main()
                 case KEY_EVENT_BTN_PRESS_UP:
                     syslog(LOG_DEBUG,"KEY_EVENT_BTN_PRESS_UP\n");
                     break;
+                case KEY_EVENT_BTN_HOLD:
+                    syslog(LOG_DEBUG,"KEY_EVENT_BTN_HOLD\n");
+                    if(is_red_led_on)
+                        system(RED_LED_DEFAULT_ON_CMD);
+                    else
+                        system(GREEN_LED_DEFAULT_ON_CMD);
+                    break;
                 case KEY_EVENT_BTN_HOLD_UP:
                     syslog(LOG_DEBUG,"KEY_EVENT_BTN_HOLD_UP\n");
 
                     ret = check_xfce_running();
                     if(ret){
+                        system(GREEN_LED_OFF_CMD);
+                        system(RED_LED_HEARTBEAT_CMD);
                         system(EXIT_XFCE_DESKTOP_CMD);
-                        syslog(LOG_DEBUG,EXIT_XFCE_DESKTOP_CMD"\n");
-
+                        is_red_led_on=true;
                     }else{
+                        system(GREEN_LED_HEARTBEAT_CMD);
+                        system(RED_LED_OFF_CMD);
                         system(ENTER_XFCE_DESKTOP_CMD);
-                        syslog(LOG_DEBUG,ENTER_XFCE_DESKTOP_CMD"\n");
+                        is_red_led_on=false;
                     }
                     break;
                 default:
